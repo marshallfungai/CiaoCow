@@ -1,9 +1,9 @@
-#React Native Assessment
+# React Native Assessment
 Ever felt hungry but had no clue what to eat? Well thanks to CiaoChow this will never happen again.
 
 We'd like you to build the CiaoChow mobile experience using Expo. The design team has been hard at work prepping this Figma file for you to follow => https://www.******.com/file/bscWZpaWT1Leu0BGBWK0NV/CiaoChow?node-id=19%3A518. You'll be able to grab all assets and see all styling there.
 
-###The user journey is simple:
+### The user journey is simple:
 - Review the onboarding splash screen
 - Register an account
 - Login
