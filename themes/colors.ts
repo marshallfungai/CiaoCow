@@ -1,8 +1,10 @@
 
 export default {
    // Define other common colors
-    bg: '#1bc47d',
-    primary: '#1bc47d',
+    bg: '#4CAD73',
+    primary: '#4CAD73',
     secondary: '#1bc47db3',
     primaryText: 'white',
+    darkText: '#333333',
+    grey:'#BDBDBD'
   };

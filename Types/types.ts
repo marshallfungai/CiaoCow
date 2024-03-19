@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
 
-type AuthProviderProps = {
+type TAuthProviderProps = {
     children: ReactNode;
-    userCredentials: UserProps | null;
+    userCredentials: TUserProps | null;
     login: (email: string, password: string) => void;
     register: (username: string, email: string, password: string) => void;
     logout: () => void;
 }
 
-type UserProps = {
+type TUserProps = {
     id: number | null;
     username?: string | null;
     email?: string | null;
@@ -17,6 +17,6 @@ type UserProps = {
 }
 
 export {
-    UserProps as UserProps,
-    AuthProviderProps as AuthProviderProps,
+    TUserProps as TUserProps,
+    TAuthProviderProps as TAuthProviderProps,
 }

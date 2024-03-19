@@ -6,20 +6,54 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors, styles, images } from '../themes';
 import Button from '../components/Button';
 import { windowWidth } from '../utils/Dimensions';
+import { TAuthProviderProps } from '../Types/types';
+import { useAuth } from '../context/AuthContext';
+import { debounce } from '../utils/debounce';
 
 
-export default function SplashScreen() {
+export default function LoginScreen() {
 
-    const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
     const navigation = useNavigation<any>();
-    function onPressHandler(): void {
-        navigation.navigate('Register');
-    }
+    const { login,} = useAuth<TAuthProviderProps>();
+
+   
+    const [email, setEmail] = useState<string>();
+    const [password, setPassword] = useState<string | undefined>();
+    const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+
+    const handleLogin = () => {
+        login(email ? email : '', password ? password : '');
+    };
+
+    const handleEmailChange = (text: string) => {
+        setEmail(text);
+    };
+
+    const handlePasswordChange = (text: string) => {
+        setPassword(text);
+    };
+
+
+    const clearForms = () => {
+        setEmail('');
+        setPassword(undefined);
+    };
+
+    const debouncedHandleLogin = debounce(handleLogin, 400);
+    const debouncedHandleEmailChange = debounce(handleEmailChange, 400);
+    const debouncedHandlePasswordChange = debounce(handlePasswordChange, 500);
+
 
     return (
         <SafeAreaView style={[styles.container, loginStyles.container]}>
             <StatusBar backgroundColor={colors.secondary} />
-            <View style={[styles.innerContainer, loginStyles.topContainer]}>
+            <View style={{ position: 'absolute', top: 70, left: 30, zIndex: 2 }}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image source={images.backIcon} width={150} height={150} />
+                </TouchableOpacity>
+            </View>
+
+            <View style={[styles.innerContainer, styles.curveContainer]}>
                 <Text style={[loginStyles.title]}>Login</Text>
                 <View style={loginStyles.personImages}>
                     <Image source={images.person2} width={200} height={100} />
@@ -30,31 +64,31 @@ export default function SplashScreen() {
                 <View style={styles.formColumn}>
                     <Text style={[styles.text, loginStyles.text]}>Email</Text>
                     <View style={styles.inputFormContainer}>
-                        <TextInput placeholder="yourname@gmail.com" placeholderTextColor={colors.primaryText} keyboardType="email-address" style={styles.textInput} />
+                        <TextInput onChangeText={(value) => debouncedHandleEmailChange(value)} placeholder="yourname@gmail.com" placeholderTextColor={colors.primaryText} keyboardType="email-address" style={styles.textInput} />
                     </View>
                 </View>
 
                 <View style={styles.formColumn}>
                     <Text style={[styles.text, loginStyles.text]}>Password</Text>
                     <View style={styles.inputFormContainer}>
-                        <TextInput secureTextEntry={isPasswordShown} placeholder="Your password" placeholderTextColor={colors.primaryText} keyboardType="default" style={styles.textInput} />
+                        <TextInput onChangeText={(value) => debouncedHandlePasswordChange(value)} secureTextEntry={isPasswordShown} placeholder="Your password" placeholderTextColor={colors.primaryText} keyboardType="default" style={styles.textInput} />
                         <TouchableOpacity onPress={() => setIsPasswordShown(!isPasswordShown)} style={styles.passwordVisibility}>
-                            {isPasswordShown ? < Image source={images.eyeClosed} /> : < Image source={images.eyeClosed} />}
+                            {isPasswordShown ? < Image source={images.eyeOpened} /> : < Image source={images.eyeClosed} />}
                         </TouchableOpacity>
                     </View>
                 </View>
 
-                <Button buttonStyle={loginStyles.button} textStyle={loginStyles.buttonText} onPress={onPressHandler}>
+                <Button buttonStyle={loginStyles.button} textStyle={loginStyles.buttonText} onPress={debouncedHandleLogin}>
                     Login
                 </Button>
                 <View style={styles.footerContainer}>
                     <Text style={styles.footerText}>
                         Don't have an account? {' '}
-                        
+
                     </Text>
                     <TouchableOpacity style={styles.footerLink} onPress={() => navigation.navigate('Register')}>
-                            <Text style={styles.footerLink}>Register </Text>
-                        </TouchableOpacity>
+                        <Text style={styles.footerLink}>Register </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -74,7 +108,7 @@ const loginStyles = StyleSheet.create({
         width: windowWidth,
         backgroundColor: colors.secondary,
         borderBottomLeftRadius: windowWidth / 3,
-        borderBottomRightRadius: windowWidth/ 2
+        borderBottomRightRadius: windowWidth / 2
     },
     bottomContainer: {
         flex: 0.6,
@@ -88,7 +122,7 @@ const loginStyles = StyleSheet.create({
         right: 20
     },
     title: {
-        color: colors.primaryText,
+        color: 'white',
         fontSize: 44,
         fontWeight: "700"
     },

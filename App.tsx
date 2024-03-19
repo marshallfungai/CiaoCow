@@ -1,33 +1,21 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AuthStack from './navigation/AuthStack';
-import AppStack from './navigation/AppStack';
+
 import { AuthProvider } from './context/AuthContext';
-import { UserProps } from './Types/types';
+import { TUserProps } from './Types/types';
 import { useState } from 'react';
 import axios from 'axios';
+import { ToastAndroid } from 'react-native';
+import NavStack from './navigation/NavStack';
 
-const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-  const [userCredentials, setUserCredentials] = useState<UserProps | null>(null);
+  const [userCredentials, setUserCredentials] = useState<TUserProps | null>(null);
   const [isLoadingCredentials, setIsLoadingCredentials] = useState<boolean>(false);
 
   const register = async (userName: string, email: string, password: string) => {
     setIsLoadingCredentials(true);
-    const formData = new FormData();
-      // formData.append('username', username);
-      // formData.append('email', email);
-      // formData.append('password', password);
-
-      formData.append('username', 'TestUser2');
-      formData.append('email', 'test2@user.com');
-      formData.append('password', 'demopassword');
-
     try {
       if(userName=='' || userName === undefined) throw Error('undefined username');
-
       const response = await axios.post('https://ciaochow.plusnarrative.biz/api/auth/local/register', {
         username:  userName,
         email : email,
@@ -35,33 +23,61 @@ export default function App() {
     });
     
       const { jwt, user } = response.data;
-
+      
       setUserCredentials({
         id: user.id,
         username: user.username,
         email: user.email,
         userToken: jwt
       });
+      ToastAndroid.showWithGravity('Request sent successfully!', 50, 10);
+      
 
     } catch (error: any) {
           if (error.response && error.response.data) {
-            console.error('Registration failed #4335:', error.response.data);
+            console.error('#4335:', error.response.data);
+            ToastAndroid.show('#4232456' + error.response.data, ToastAndroid.LONG);
+            
         } else {
-            console.error('Registration failed #423t24:', error.message);
+            console.error('#1512199001', error.message);
+            ToastAndroid.show('#1512199001' + error.message, ToastAndroid.LONG);
         }
     }
     setIsLoadingCredentials(false);
   }
 
-  const login = (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
     setIsLoadingCredentials(true);
-    const credentials: UserProps = {
-      id: 2323,
-      username: 'TestUser2',
-      email: 'test2@gmail.com',
-      userToken: null
+
+    try {
+      if(email=='' || password === undefined) throw Error('Fill in missing values');
+      const response = await axios.post('https://ciaochow.plusnarrative.biz/api/auth/local', {
+        identifier : email,
+        password : password
+    });
+    
+      const { jwt, user } = response.data;
+      
+      setUserCredentials({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        userToken: jwt
+      });
+      ToastAndroid.showWithGravity('Login Successful', 50, 10);
+      
+
+    } catch (error: any) {
+          if (error.response && error.response.data) {
+            //console.error('#4335:', error.response.data);
+            ToastAndroid.show('#433 :' + error.response.data.error.message, ToastAndroid.LONG);
+            
+        } else {
+            console.error('#15121 ', error.message);
+            ToastAndroid.show('#15121 : ' + error.message, ToastAndroid.LONG);
+        }
     }
-    setUserCredentials(credentials);
+      ///---
     setIsLoadingCredentials(false);
   }
 
@@ -78,10 +94,7 @@ export default function App() {
       register={register}
       logout={logout}
     >
-      <NavigationContainer>
-        {/* <AppStack/> */}
-        <AuthStack />
-      </NavigationContainer>
+      <NavStack/>
     </AuthProvider>
   );
 }

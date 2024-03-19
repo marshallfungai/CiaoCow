@@ -1,7 +1,7 @@
 
 import { StyleSheet, Text, View, Image, TouchableOpacity, GestureResponderEvent, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation  } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { styles, colors, images } from '../themes/';
 import Button from '../components/Button';
 import { StatusBar } from 'expo-status-bar';
@@ -11,10 +11,10 @@ const { width, height } = Dimensions.get('window');
 
 export default function SplashScreen() {
 
-    const navigation =  useNavigation <any>();
+    const navigation = useNavigation<any>();
     function onPressHandler(): void {
         navigation.navigate('Register');
-    }                                                                                       
+    }
 
     return (
         <SafeAreaView style={[styles.container, splashStyles.container]}>
@@ -51,18 +51,18 @@ const splashStyles = StyleSheet.create({
         width: width,
         backgroundColor: colors.secondary,
         padding: 50,
-        borderBottomLeftRadius: width /3,
-        borderBottomRightRadius: width /2
+        borderBottomLeftRadius: width / 3,
+        borderBottomRightRadius: width / 2
     },
     bottomContainer: {
         flex: 0.6,
         justifyContent: "center",
-        borderBottomLeftRadius: width /3,
-        borderBottomRightRadius: width /2
+        borderBottomLeftRadius: width / 3,
+        borderBottomRightRadius: width / 2
     },
     personImages: {
         flexDirection: "row",
-        position:"absolute",
+        position: "absolute",
         bottom: -50
     },
     text: {

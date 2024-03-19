@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { AuthProviderProps, UserProps } from '../Types/types';
+import { TAuthProviderProps, TUserProps } from '../Types/types';
 
 
 type AuthContextType = {
-    userCredentials: UserProps | null;
+    userCredentials: TUserProps | null;
     register: (username: string, email: string, password: string) => void;
     login: (email: string, password: string) => void;
     logout: () => void;
@@ -12,7 +12,7 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 
-export function AuthProvider({ children, userCredentials, register,login, logout }: AuthProviderProps) {
+export function AuthProvider({ children, userCredentials, register,login, logout }: TAuthProviderProps) {
 
    return(
     <AuthContext.Provider value={{ 

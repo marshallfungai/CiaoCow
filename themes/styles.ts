@@ -5,6 +5,15 @@ import { windowWidth } from '../utils/Dimensions';
 
 const styles = StyleSheet.create({
     // Define other common styles
+    curveContainer: {
+        flex: 0.4,
+        justifyContent: "flex-start",
+        flexDirection: 'row',
+        width: windowWidth,
+        backgroundColor: colors.secondary,
+        borderBottomLeftRadius: windowWidth / 3,
+        borderBottomRightRadius: windowWidth / 2
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -22,6 +31,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         letterSpacing: 1.5
     },
+    title2: {
+        fontSize: 32,
+        fontWeight: "bold",
+        letterSpacing: 1.5
+    },
     text: {
         fontSize: 18
     },
@@ -34,6 +48,7 @@ const styles = StyleSheet.create({
 
     },
     footerText: {
+        color: colors.primary,
         fontSize: 12,
         textAlign: 'center',
         alignItems: 'center'
@@ -68,7 +83,7 @@ const styles = StyleSheet.create({
 
     textInput: {
         flex: 1,
-        color: 'grey',
+        color: colors.darkText,
         height: 48,
         paddingLeft: 10,
         paddingTop: 10,
@@ -76,12 +91,6 @@ const styles = StyleSheet.create({
     },
     passwordVisibility: {
         position: "absolute", right: 12, zIndex: 10
-    },
-    orderImage: {
-        width: windowWidth * 0.9,
-        height: 200,
-        marginHorizontal: 10,
-        borderRadius: 10,
     },
 });
 
