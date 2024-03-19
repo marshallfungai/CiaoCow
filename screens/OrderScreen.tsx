@@ -7,8 +7,9 @@ import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 import { windowHeight, windowWidth } from '../utils/Dimensions';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { TAuthProviderProps } from '../Types/types';
 
-type ImageData = {
+type TImageData = {
     id: number;
     imageUrl: string;
 };
@@ -18,14 +19,14 @@ type TCiacoCowData = {
     id: number;
     description: string;
     title: string;
-    images: ImageData[];
+    images: TImageData[];
 };
 
 
 export default function OrderScreen() {
 
     const baseUrl = 'https://ciaochow.plusnarrative.biz';
-    const { userCredentials, logout } = useAuth();
+    const { userCredentials, logout } = useAuth<TAuthProviderProps>();
     const [ciaoCowData, setCiaoCowData] = useState<TCiacoCowData[]>([]);
     const [randomMunchIndex, setRandomMunchIndex] = useState<number>(0);
 
@@ -35,8 +36,8 @@ export default function OrderScreen() {
     }, []);
 
 
-    const extractImageData = (imageData: any): ImageData[] => {
-        const formattedImageData: ImageData[] = imageData.map((image: any) => ({
+    const extractImageData = (imageData: any): TImageData[] => {
+        const formattedImageData: TImageData[] = imageData.map((image: any) => ({
             id: image.id,
             imageUrl: baseUrl + image.attributes.url
         }));
@@ -80,7 +81,7 @@ export default function OrderScreen() {
                 const description: string = munch.attributes.Description;
                 const title: string = munch.attributes.Title;
                 const createdAt = munch.attributes.createdAt;
-                const images: ImageData[] = extractImageData(munch.attributes.Image.data);
+                const images: TImageData[] = extractImageData(munch.attributes.Image.data);
 
                 const ciaoCowData: TCiacoCowData = {
                     id: id,
@@ -107,7 +108,7 @@ export default function OrderScreen() {
         }
     }
 
-    const renderItem = ({ item }: { item: ImageData }) => (
+    const renderItem = ({ item }: { item: TImageData }) => (
         <Image source={{ uri: item.imageUrl }} style={orderStyles.orderImage} />
     );
 

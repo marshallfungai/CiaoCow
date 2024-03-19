@@ -26,7 +26,7 @@ export function AuthProvider({ children, userCredentials, register,login, logout
    );
 }
 
-export function useAuth<AuthProviderProps>() {
+export function useAuth<TAuthProviderProps>() {
     const context = useContext(AuthContext);
     if (!context) {
         throw new Error('useAuth must be used within an AuthProvider');
