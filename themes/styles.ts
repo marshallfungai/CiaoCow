@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         flexDirection: 'row',
         width: windowWidth,
-        backgroundColor: colors.secondary,
+        backgroundColor: colors.primary,
         borderBottomLeftRadius: windowWidth / 3,
         borderBottomRightRadius: windowWidth / 2
     },

@@ -14,12 +14,12 @@ import { debounce } from '../utils/debounce';
 export default function LoginScreen() {
 
     const navigation = useNavigation<any>();
-    const { login,} = useAuth<TAuthProviderProps>();
+    const { login, } = useAuth<TAuthProviderProps>();
 
-   
+
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string | undefined>();
-    const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+    const [isPasswordShown, setIsPasswordShown] = useState<boolean>(true);
 
     const handleLogin = () => {
         login(email ? email : '', password ? password : '');
@@ -46,7 +46,7 @@ export default function LoginScreen() {
 
     return (
         <SafeAreaView style={[styles.container, loginStyles.container]}>
-            <StatusBar backgroundColor={colors.secondary} />
+            <StatusBar backgroundColor={colors.primary} />
             <View style={{ position: 'absolute', top: 70, left: 30, zIndex: 2 }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image source={images.backIcon} width={150} height={150} />
@@ -64,16 +64,16 @@ export default function LoginScreen() {
                 <View style={styles.formColumn}>
                     <Text style={[styles.text, loginStyles.text]}>Email</Text>
                     <View style={styles.inputFormContainer}>
-                        <TextInput onChangeText={(value) => debouncedHandleEmailChange(value)} placeholder="yourname@gmail.com" placeholderTextColor={colors.primaryText} keyboardType="email-address" style={styles.textInput} />
+                        <TextInput onChangeText={(value) => debouncedHandleEmailChange(value)} placeholder="yourname@gmail.com" placeholderTextColor={colors.grey} keyboardType="email-address" style={styles.textInput} />
                     </View>
                 </View>
 
                 <View style={styles.formColumn}>
                     <Text style={[styles.text, loginStyles.text]}>Password</Text>
                     <View style={styles.inputFormContainer}>
-                        <TextInput onChangeText={(value) => debouncedHandlePasswordChange(value)} secureTextEntry={isPasswordShown} placeholder="Your password" placeholderTextColor={colors.primaryText} keyboardType="default" style={styles.textInput} />
+                        <TextInput onChangeText={(value) => debouncedHandlePasswordChange(value)} secureTextEntry={isPasswordShown} placeholder="Your password" placeholderTextColor={colors.grey} keyboardType="default" style={styles.textInput} />
                         <TouchableOpacity onPress={() => setIsPasswordShown(!isPasswordShown)} style={styles.passwordVisibility}>
-                            {isPasswordShown ? < Image source={images.eyeOpened} /> : < Image source={images.eyeClosed} />}
+                            {isPasswordShown ? < Image source={images.eyeClosed} /> : < Image source={images.eyeOpened} />}
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -100,15 +100,6 @@ const loginStyles = StyleSheet.create({
     container: {
         justifyContent: 'space-between',
         backgroundColor: "white"
-    },
-    topContainer: {
-        flex: 0.4,
-        justifyContent: "flex-start",
-        flexDirection: 'row',
-        width: windowWidth,
-        backgroundColor: colors.secondary,
-        borderBottomLeftRadius: windowWidth / 3,
-        borderBottomRightRadius: windowWidth / 2
     },
     bottomContainer: {
         flex: 0.6,

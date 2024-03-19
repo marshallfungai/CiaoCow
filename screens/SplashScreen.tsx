@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, Image, TouchableOpacity, GestureResponderEvent, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { styles, colors, images } from '../themes/';
@@ -58,7 +58,7 @@ const splashStyles = StyleSheet.create({
         flex: 0.6,
         justifyContent: "center",
         borderBottomLeftRadius: width / 3,
-        borderBottomRightRadius: width / 2
+        borderBottomRightRadius: width / 2.5
     },
     personImages: {
         flexDirection: "row",

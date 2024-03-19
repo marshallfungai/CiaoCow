@@ -1,4 +1,4 @@
-import { StatusBar, setStatusBarBackgroundColor } from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,16 +14,15 @@ import { windowWidth } from '../utils/Dimensions';
 export default function RegisterScreen() {
 
     const navigation = useNavigation<any>();
-    const { login, userCredentials, register } = useAuth<TAuthProviderProps>();
+    const { register } = useAuth<TAuthProviderProps>();
 
     const [userName, setUserName] = useState<string>();
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string | undefined>();
-    const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+    const [isPasswordShown, setIsPasswordShown] = useState<boolean>(true);
 
     const handleRegister = () => {
         register(userName ? userName : '', email ? email : '', password ? password : '');
-        clearForms();
     };
 
     const handleUserNameChange = (text: string) => {
@@ -39,12 +38,6 @@ export default function RegisterScreen() {
     };
 
 
-    const clearForms = () => {
-        setUserName('');
-        setEmail('');
-        setPassword(undefined);
-    };
-
     const debouncedHandleRegister = debounce(handleRegister, 400);
     const debouncedHandleUserNameChange = debounce(handleUserNameChange, 400);
     const debouncedHandleEmailChange = debounce(handleEmailChange, 400);
@@ -53,7 +46,7 @@ export default function RegisterScreen() {
 
     return (
         <SafeAreaView style={[styles.container, registerStyles.container]}>
-            <StatusBar backgroundColor={colors.secondary} />
+            <StatusBar backgroundColor={colors.primary} />
             <View style={{ position: 'absolute', top: 70, left: 30, zIndex: 2 }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image source={images.backIcon} width={150} height={150} />
@@ -87,7 +80,7 @@ export default function RegisterScreen() {
                     <View style={styles.inputFormContainer}>
                         <TextInput onChangeText={(value) => debouncedHandlePasswordChange(value)} secureTextEntry={isPasswordShown} placeholder="your password" placeholderTextColor={colors.primaryText} keyboardType="default" style={styles.textInput} />
                         <TouchableOpacity onPress={() => setIsPasswordShown(!isPasswordShown)} style={styles.passwordVisibility}>
-                            {(isPasswordShown == true) ? < Image source={images.eyeOpened} /> : < Image source={images.eyeClosed} />}
+                            {isPasswordShown ? < Image source={images.eyeClosed} /> : < Image source={images.eyeOpened} />}
                         </TouchableOpacity>
                     </View>
                 </View>

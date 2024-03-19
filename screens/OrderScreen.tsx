@@ -149,7 +149,7 @@ export default function OrderScreen() {
     const NutritionFactsTab = () => {
         return (
             <View style={styles.innerContainer}>
-                <Text>Facts coming soon !</Text>
+                <Text>Nutrition facts coming soon !</Text>
             </View>
         );
     }
@@ -226,7 +226,7 @@ const orderStyles = StyleSheet.create({
     },
     tabIndicator: {
         backgroundColor: colors.primary,
-        paddingBottom: 10
+        paddingBottom: 5
     },
     tabLabel: {
         color: colors.primary,
